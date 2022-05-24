@@ -1,0 +1,23 @@
+body {
+   background-image: url("../../noorehtesham/Desktop/unhealthiest-foods-planet.webp"); 
+}
+.food-btn {
+    margin-left:1%;
+    margin-top: 1%;
+}
+
+.container {
+    font-size: 130%;
+    margin-top: 3%;
+}
+.container {
+    font-family: 'Koulen';
+  }
+
+  #add-button {
+      margin-bottom: 1%;
+  }
+
+  #lol {
+      font-size: 60px;
+  }

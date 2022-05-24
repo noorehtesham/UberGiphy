@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Food is Life </title>
+    <link rel="stylesheet" type="text/css" href="./giphy.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+    <div class="container text-center">
+          <div class="row">
+            <h1 id="lol"> Food is Life! </h1>
+        </div>
+        <div class="row">
+            <h2>Select a button to view corresponding GIFS!</h2>
+        </div>
+        <div class="row">
+            <div id="buttons-view"></div>
+        </div>
+    
+        <br>
+        <div class = row>
+        <form id="button-form">
+            <input type="text" id="giph-input">
+            <br>
+            <!-- button triggers new food to be added -->
+            <br>
+            <input id="add-button" type="submit" value="Add a Giph">
+        </form>
+        </div>
+        <div id="foodie"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        var foodArray = ["French Fries", "Pizza", "Cheesburgers", "Macaroni", "Mashed Potatos", "Bread", "Brownies", "Fried Chicken", "Spaghetti", "Chicken and Waffles"]
+
+        function displayFoodInfo() {
+            var food = $(this).attr("data-name");
+            var APIkey = "lg9jhzd80UCOGP9T9naY0dF99lFiKlqs";
+            var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + APIkey + "&q=" + food + "&limit=25&offset=0&rating=G&lang=en";
+            console.log("hey");
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function(response) {
+                //for ( var i=0; i<results.length; i++) {
+                var results = response.data;
+                console.log(results);
+
+                var foodDiv = $("#foodie");
+                foodDiv.empty();
+                for (var i = 0; i < results.length; i++) {
+                    var animatedImageURL = results[i].images.fixed_height.url;
+
+                 
+
+
+
+                    //var stillImages = $("<img>").attr("src", stillimageURL);
+                    var animatedImages = $("<img>").attr("src", animatedImageURL);
+                    foodDiv.append(animatedImages);
+
+                    //stillImages.attr("data-state","still").attr("class", "gif");
+                    animatedImages
+                        .attr("data-state", "animate")
+                        .attr("class", "gif")
+                        .attr("data-animateURL", animatedImageURL)
+                    
+
+
+
+                }
+
+
+              $(".gif").click(function() {
+            var state = $(this).attr("data-state");
+
+     
+        })
+
+
+            })
+
+        }
+
+
+ 
+
+        //displays buttons on page. setting attributes for every button and appending them to the page
+        function renderButtons() {
+            $("#buttons-view").empty();
+            for (var i = 0; i < foodArray.length; i++) {
+                var a = $("<button>");
+                a.addClass("food-btn");
+                a.attr("data-name", foodArray[i]);
+
+                a.text(foodArray[i]);
+                $("#buttons-view").append(a);
+            }
+        }
+
+        // takes input from textbox and adds button to list of buttons
+        $("#add-button").on("click", function(event) {
+            event.preventDefault();
+
+            var foodisLife = $("#giph-input").val();
+
+            foodArray.push(foodisLife);
+
+            renderButtons();
+        })
+
+
+        // calls the displayFoodInfo function upon clicking on a button
+        $(document).on("click", ".food-btn", displayFoodInfo);
+
+        // calling function to display buttons
+        renderButtons();
+
+
+        </script>
+        </div>
+</body>
+
+</html>
